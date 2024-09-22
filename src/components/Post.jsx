@@ -1,11 +1,12 @@
 import Avatar from "./ui/Avatar";
-import { Image } from "react-bootstrap/Image";
+import { Image } from "react-bootstrap";
 import LikeButton from "./ui/LikeButton";
 import CommentButton from "./ui/CommentButton";
+import PropTypes from "prop-types";
 
 export default function Post({ post }) {
   return (
-    <div className="shadow-sm px-3 pt-3 bg-body-tertiary rounded">
+    <div className="shadow-sm mt-3 px-3 pt-3 bg-body-tertiary rounded">
       <div className="mb-3 p-3">
         <div className="d-flex justify-content-between">
           <div className="d-flex justify-center align-items-center">
@@ -21,9 +22,9 @@ export default function Post({ post }) {
         </div>
         <hr />
         <div>
-          <p style="text-align: justify">{post.post}</p>
+          <p style={{ textAlign: "justify" }}>{post.post}</p>
 
-          {post.images.length != 0 ? (
+          {post.images && post.images.length !== 0 ? (
             <div className="d-flex flex-shrink-1 gap-2 mb-3">
               {post.images.map((image) => (
                 <Image
@@ -45,3 +46,19 @@ export default function Post({ post }) {
     </div>
   );
 }
+
+Post.propTypes = {
+  post: PropTypes.shape({
+    avatarImg: PropTypes.string,
+    name: PropTypes.string,
+    time: PropTypes.number,
+    post: PropTypes.string,
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        width: PropTypes.string,
+        src: PropTypes.string,
+      })
+    ),
+  }),
+};
